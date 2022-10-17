@@ -1,5 +1,4 @@
-﻿
-create table Customers(
+﻿create table Customers(
 	Name  nvarchar(255) not null,
 	Address nvarchar(255) not null,
 	Tel varchar(15) not null unique check(Tel like'0%'),
