@@ -1,14 +1,14 @@
 ﻿insert into NHACUNGCAP(MaNhaCC,TenNhaCC,DiaChi,SoDT,MaSoThue)
 values ('NCC001',N'Cty TNHH Toàn Pháp','Hai Chau','05113999888',568941),
-('NCC002',N'Cty Cổ phần Đông Du','Lien Chieu','0511399989',456789),
-('NCC003',N'Ông Nguyễn Văn A','Hoa Thuan','05113999890',321456),
-('NCC004',N'Cty Cổ phần Toàn Cầu Xanh','Hai Chieu','05113658945',513364),
-('NCC005',N'Cty TNHH AMA','Thanh Khe','05113875466',546546),
-('NCC006',N'Bà Trần Thị Bích Vân','Lien Chieu','05113587469',524545),
-('NCC007',N'Cty TNHH Phan Thành','Thanh Khe','05113987456',113021),
-('NCC008',N'Ông Phan Đình Nam','Hoa Thuan','05113532456',121230),
-('NCC009',N'Tập đoàn Đông Nam Á','Lien Chieu','05113987121',533654),
-('NCC010',N'Cty Cổ phần Rạng Đông','Lien Chieu','05113569654',1887864);
+		('NCC002',N'Cty Cổ phần Đông Du','Lien Chieu','0511399989',456789),
+		('NCC003',N'Ông Nguyễn Văn A','Hoa Thuan','05113999890',321456),
+		('NCC004',N'Cty Cổ phần Toàn Cầu Xanh','Hai Chieu','05113658945',513364),
+		('NCC005',N'Cty TNHH AMA','Thanh Khe','05113875466',546546),
+		('NCC006',N'Bà Trần Thị Bích Vân','Lien Chieu','05113587469',524545),
+		('NCC007',N'Cty TNHH Phan Thành','Thanh Khe','05113987456',113021),
+		('NCC008',N'Ông Phan Đình Nam','Hoa Thuan','05113532456',121230),
+		('NCC009',N'Tập đoàn Đông Nam Á','Lien Chieu','05113987121',533654),
+		('NCC010',N'Cty Cổ phần Rạng Đông','Lien Chieu','05113569654',1887864);
 
 select * from NHACUNGCAP;
 drop table NHACUNGCAP;
@@ -16,8 +16,8 @@ drop table NHACUNGCAP;
 
 insert into LOAIDICHVU(MaLoaiDV,TenLoaiDV)
 values ('DV01',N'Dịch vụ xe taxi'),
-('DV02',N'Dịch vụ xe buýt công cộng theo tuyến cố định'),
-('DV03',N'Dịch vụ xe cho thuê theo hợp đồng');
+		('DV02',N'Dịch vụ xe buýt công cộng theo tuyến cố định'),
+		('DV03',N'Dịch vụ xe cho thuê theo hợp đồng');
 
 select * from LOAIDICHVU;
 
@@ -35,9 +35,9 @@ values ('Hiace','Toyota',16),
 
 insert into MUCPHI(MaMP,DonGia,MoTa)
 values ('MP01',10000,N'Áp dụng từ 1/2015'),
-('MP02',15000,N'Áp dụng từ 2/2015'),
-('MP03',20000,N'Áp dụng từ 1/2010'),
-('MP04',25000,N'Áp dụng từ 2/2012');
+		('MP02',15000,N'Áp dụng từ 2/2015'),
+		('MP03',20000,N'Áp dụng từ 1/2010'),
+		('MP04',25000,N'Áp dụng từ 2/2012');
 
 select * from MUCPHI;
 
