@@ -1,14 +1,14 @@
 ﻿insert into NHACUNGCAP(MaNhaCC,TenNhaCC,DiaChi,SoDT,MaSoThue)
-values ('NCC001',N'Cty TNHH Toàn Pháp','Hai Chau','05113999888',568941),
-		('NCC002',N'Cty Cổ phần Đông Du','Lien Chieu','0511399989',456789),
-		('NCC003',N'Ông Nguyễn Văn A','Hoa Thuan','05113999890',321456),
+values ('NCC001',N'Cty TNHH Toàn Pháp','Hai Chau',         '05113999888',568941),
+		('NCC002',N'Cty Cổ phần Đông Du','Lien Chieu',     '05113999889',456789),
+		('NCC003',N'Ông Nguyễn Văn A','Hoa Thuan',         '05113999890',321456),
 		('NCC004',N'Cty Cổ phần Toàn Cầu Xanh','Hai Chieu','05113658945',513364),
-		('NCC005',N'Cty TNHH AMA','Thanh Khe','05113875466',546546),
-		('NCC006',N'Bà Trần Thị Bích Vân','Lien Chieu','05113587469',524545),
-		('NCC007',N'Cty TNHH Phan Thành','Thanh Khe','05113987456',113021),
-		('NCC008',N'Ông Phan Đình Nam','Hoa Thuan','05113532456',121230),
-		('NCC009',N'Tập đoàn Đông Nam Á','Lien Chieu','05113987121',533654),
-		('NCC010',N'Cty Cổ phần Rạng Đông','Lien Chieu','05113569654',1887864);
+		('NCC005',N'Cty TNHH AMA','Thanh Khe',             '05113875466',546546),
+		('NCC006',N'Bà Trần Thị Bích Vân','Lien Chieu',    '05113587469',524545),
+		('NCC007',N'Cty TNHH Phan Thành','Thanh Khe',      '05113987456',113021),
+		('NCC008',N'Ông Phan Đình Nam','Hoa Thuan',        '05113532456',121230),
+		('NCC009',N'Tập đoàn Đông Nam Á','Lien Chieu',     '05113987121',533654),
+		('NCC010',N'Cty Cổ phần Rạng Đông','Lien Chieu',   '05113569654',187864);
 
 select * from NHACUNGCAP;
 drop table NHACUNGCAP;
@@ -76,30 +76,72 @@ select * from MUCPHI;
 --Câu 3: Liệt kê những dòng xe có số chỗ ngồi trên 5 chỗ
 select * from DONGXE where SoChoNgoi > 5;
 
---Câu 4: Liệt kê thông tin của các nhà cung cấp đã từng đăng ký cung cấp những dòng xe thuộc hãng xe “Toyota” 
---với mức phí có đơn giá là 15.000 VNĐ/km hoặc những dòng xe thuộc hãng xe “KIA” với mức phí có đơn giá là 20.000 VNĐ/km 
+--Câu 4: Liệt kê thông tin của các nhà cung cấp đã từng đăng ký cung cấp những 
+--dòng xe thuộc hãng xe “Toyota” 
+--với mức phí có đơn giá là 15.000 VNĐ/km hoặc những dòng xe thuộc hãng xe “KIA” 
+--với mức phí có đơn giá là 20.000 VNĐ/km 
 select * from NHACUNGCAP where MaNhaCC in 
-(select MaNhaCC from DANGKYCUNGCAP where MaMP in
-(select MaMP from MUCPHI where MaMP like 'MP02'));
+	(select MaNhaCC from DANGKYCUNGCAP where DongXe in 
+		(select DongXe from DONGXE where HangXe like'Toyota') and MaMP in
+			(select MaMP from MUCPHI where DonGia = 15000)
+	)
 
---Câu 5: Liệt kê thông tin toàn bộ nhà cung cấp được sắp xếp tăng dần theo tên nhà cung cấp và giảm dần theo mã số thuế 
-select * from NHACUNGCAP order by TenNhaCC asc;
-select * from NHACUNGCAP order by MaSoThue desc;
+	or MaNhaCC in 
+	(select MaNhaCC from DANGKYCUNGCAP where DongXe in 
+		(select DongXe from DONGXE where HangXe like'KIA') and MaMP in
+			(select MaMP from MUCPHI where DonGia = 20000)
+	)
+;
+--cach 2
+select distinct b.* from DANGKYCUNGCAP a
+inner join NHACUNGCAP b on a.MaNhaCC = b.MaNhaCC
+inner join MUCPHI c on a.MaMP = c.MaMP
+inner join DONGXE d on a.DongXe = d.DongXe
+where (d.HangXe like 'Toyota' and c.DonGia = 15) or
+(d.HangXe like 'KIA' and c.DonGia = 20);
+
+
+
+--Câu 5: Liệt kê thông tin toàn bộ nhà cung cấp được sắp xếp tăng dần theo tên 
+--nhà cung cấp và giảm dần theo mã số thuế 
+select * from NHACUNGCAP order by TenNhaCC asc, MaSoThue desc;
+--select * from NHACUNGCAP order by MaSoThue desc;
  
---Câu 6: Đếm số lần đăng ký cung cấp phương tiện tương ứng cho từng nhà cung cấp với yêu cầu chỉ đếm cho những nhà cung 
+--Câu 6: Đếm số lần đăng ký cung cấp phương tiện tương ứng cho từng nhà cung cấp 
+--với yêu cầu chỉ đếm cho những nhà cung 
 --cấp thực hiện đăng ký cung cấp có ngày bắt đầu cung cấp là “20/11/2015” 
+select MaNhaCC, count(*) as soluong from DANGKYCUNGCAP 
+where NgayBatDauCungCap >='2015-11-20' group by MaNhaCC;
 
 
---Câu 7: Liệt kê tên của toàn bộ các hãng xe có trong cơ sở dữ liệu với yêu cầu mỗi hãng xe chỉ được liệt kê một lần
+--Câu 7: Liệt kê tên của toàn bộ các hãng xe có trong cơ sở dữ liệu với yêu cầu 
+--mỗi hãng xe chỉ được liệt kê một lần
+select distinct HangXe from DONGXE;
 
  
---Câu 8: Liệt kê MaDKCC, MaNhaCC, TenNhaCC, DiaChi, MaSoThue, TenLoaiDV, DonGia, HangXe, NgayBatDauCC, NgayKetThucCC 
---của tất cả các lần đăng ký cung cấp phương tiện với yêu cầu những nhà cung cấp nào chưa từng thực hiện đăng ký cung 
+--Câu 8: Liệt kê MaDKCC, MaNhaCC, TenNhaCC, DiaChi, MaSoThue, TenLoaiDV, DonGia, 
+--HangXe, NgayBatDauCC, NgayKetThucCC 
+--của tất cả các lần đăng ký cung cấp phương tiện với yêu cầu những nhà cung cấp 
+--nào chưa từng thực hiện đăng ký cung 
 --cấp phương tiện thì cũng liệt kê thông tin những nhà cung cấp đó ra 
+select distinct a.MaDKCC, a.MaNhaCC, b.TenNhaCC, b.DiaChi,
+b.MaSoThue,e.TenLoaiDV, c.DonGia,d.HangXe,a.NgayBatDauCC,
+a.NgayKetThucCC from DANGKYCUNGCAP a
+right join NHACUNGCAP b on a.MaNhaCC = b.MaNhaCC
+left join MUCPHI c on a.MaMP = c.MaMP
+left join DONGXE d on a.DongXe = d.DongXe
+left join LOAIDICHVU e on a.MaLoaiDV = e.MaLoaiDV;
 
 
---Câu 9: Liệt kê thông tin của các nhà cung cấp đã từng đăng ký cung cấp phương tiện thuộc dòng xe “Hiace” hoặc từng 
+--Câu 9: Liệt kê thông tin của các nhà cung cấp đã từng đăng ký cung cấp phương 
+--tiện thuộc dòng xe “Hiace” hoặc từng 
 --đăng ký cung cấp phương tiện thuộc dòng xe “Cerato” 
+select * from NHACUNGCAP where MaNhaCC in 
+	(select MaNhaCC from DANGKYCUNGCAP where DongXe in('Hiace','Cerato')
+);
 
 
---Câu 10: Liệt kê thông tin của các nhà cung cấp chưa từng thực hiện đăng ký cung cấp phương tiện lần nào cả.
+--Câu 10: Liệt kê thông tin của các nhà cung cấp chưa từng thực hiện đăng ký cung 
+--cấp phương tiện lần nào cả.
+select * from NHACUNGCAP where MaNhaCC not in 
+	(select MaNhaCC from DANGKYCUNGCAP);
