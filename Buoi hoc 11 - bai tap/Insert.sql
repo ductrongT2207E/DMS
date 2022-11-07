@@ -76,10 +76,9 @@ select * from MUCPHI;
 --Câu 3: Liệt kê những dòng xe có số chỗ ngồi trên 5 chỗ
 select * from DONGXE where SoChoNgoi > 5;
 
---Câu 4: Liệt kê thông tin của các nhà cung cấp đã từng đăng ký cung cấp những 
---dòng xe thuộc hãng xe “Toyota” 
---với mức phí có đơn giá là 15.000 VNĐ/km hoặc những dòng xe thuộc hãng xe “KIA” 
---với mức phí có đơn giá là 20.000 VNĐ/km 
+--Câu 4: Liệt kê thông tin của các nhà cung cấp đã từng đăng ký cung cấp  
+--những dòng xe thuộc hãng xe “Toyota” với mức phí có đơn giá là 15.000 VNĐ/km hoặc  
+--những dòng xe thuộc hãng xe “KIA” với mức phí có đơn giá là 20.000 VNĐ/k
 select * from NHACUNGCAP where MaNhaCC in 
 	(select MaNhaCC from DANGKYCUNGCAP where DongXe in 
 		(select DongXe from DONGXE where HangXe like'Toyota') and MaMP in
@@ -93,7 +92,7 @@ select * from NHACUNGCAP where MaNhaCC in
 	)
 ;
 --cach 2
-select distinct b.* from DANGKYCUNGCAP a
+select distinct * from DANGKYCUNGCAP a
 inner join NHACUNGCAP b on a.MaNhaCC = b.MaNhaCC
 inner join MUCPHI c on a.MaMP = c.MaMP
 inner join DONGXE d on a.DongXe = d.DongXe
@@ -104,14 +103,14 @@ where (d.HangXe like 'Toyota' and c.DonGia = 15) or
 
 --Câu 5: Liệt kê thông tin toàn bộ nhà cung cấp được sắp xếp tăng dần theo tên 
 --nhà cung cấp và giảm dần theo mã số thuế 
-select * from NHACUNGCAP order by TenNhaCC asc, MaSoThue desc;
---select * from NHACUNGCAP order by MaSoThue desc;
+select * from NHACUNGCAP order by TenNhaCC asc;
+select * from NHACUNGCAP order by MaSoThue desc;
  
 --Câu 6: Đếm số lần đăng ký cung cấp phương tiện tương ứng cho từng nhà cung cấp 
 --với yêu cầu chỉ đếm cho những nhà cung 
 --cấp thực hiện đăng ký cung cấp có ngày bắt đầu cung cấp là “20/11/2015” 
 select MaNhaCC, count(*) as soluong from DANGKYCUNGCAP 
-where NgayBatDauCungCap >='2015-11-20' group by MaNhaCC;
+where NgayBatDauCC ='2015-11-20' group by MaNhaCC;
 
 
 --Câu 7: Liệt kê tên của toàn bộ các hãng xe có trong cơ sở dữ liệu với yêu cầu 
