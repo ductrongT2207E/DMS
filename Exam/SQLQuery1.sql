@@ -39,13 +39,13 @@ select * from Parts where Price > 100;
 
 --Cau 5: 
 
-select * from Parts where CateID in (select CateID from Categories where CateName like 'CPU');
+select * from Parts where CateId in (select CateId from Categories where CateName like 'CPU');
 
 --Cau 6:
 
 create view v_Parts as
-select a.PartID,a.PartName,b.CateName,a.Price,a.Quantity from Parts a 
-left join Categories b on a.CateID = b.CateID;
+select a.PartId,a.PartName,b.CateName,a.Price,a.Quantity from Parts a 
+left join Categories b on a.CateId = b.CateId;
 select * from v_Parts;
 
 --Cau 7:
