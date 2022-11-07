@@ -45,7 +45,7 @@ select * from Parts where CateId in (select CateId from Categories where CateNam
 
 create view v_Parts as
 select a.PartId,a.PartName,b.CateName,a.Price,a.Quantity from Parts a 
-left join Categories b on a.CateId = b.CateId;
+inner join Categories b on a.CateId = b.CateId;
 select * from v_Parts;
 
 --Cau 7:
